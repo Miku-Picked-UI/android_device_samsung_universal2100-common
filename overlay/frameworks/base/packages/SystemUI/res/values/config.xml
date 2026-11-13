@@ -32,4 +32,8 @@
     <!-- Should we vibrate on an icon animation of the shelf. This should only be active if the
           vibrator is capable of subtle vibrations -->
     <bool name="config_vibrateOnIconAnimation">true</bool>
+
+    <!-- Miku-Picked UI lockscreen charging info: the health HAL reports the kernel's mA as the
+         current, not µA. -->
+    <integer name="config_currentInfoDivider">1</integer>
 </resources>
