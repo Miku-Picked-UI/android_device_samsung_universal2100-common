@@ -97,3 +97,10 @@ prebuilt_root {
     install_in_root: true,
     recovery: true,
 }
+
+prebuilt_etc {
+    name: "init.mali.exynos2100",
+    defaults: ["init_etc_defaults.exynos2100"],
+    src: "init.mali.rc",
+    filename: "init.mali.rc",
+}

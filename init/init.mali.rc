@@ -1,0 +1,91 @@
+# Miku-Picked UI: Mali GPU driver switch, userspace side.
+#
+# The kernel selects one of its Mali KMDs (mali_kbase_rXXpY) with the
+# mali.version token baked into the kernel image (the GPU driver switch in
+# Settings patches it) and reports it as androidboot.mali_version, so it is
+# ro.boot.mali_version here. For anything but the stock r38p0, bind-mount the
+# matching userspace driver from /vendor/lib{,64}/gpu (see
+# vendor/samsung/universal2100-common/mali) over the stock one before anything
+# uses the GPU. OpenCL follows, through the libOpenCL.so symlinks. The camera's
+# OpenCL clients get copies that load libOCLc.so, the stock-era OpenCL, instead.
+#
+# KMD -> userspace: r38p1 -> r38p1; r44p1, r49p1 -> r49p1; r54p1, r54p3 -> r54p1
+# (r54p1 uses r49p1's 32-bit driver). The r44p1+ userspace needs SBWC video
+# decoding off on Exynos 2100.
+
+on init && property:ro.boot.mali_version=r38p1
+    mount none /vendor/lib64/gpu/r38p1/libGLES_mali.so /vendor/lib64/egl/libGLES_mali.so bind
+    mount none /vendor/lib/gpu/r38p1/libGLES_mali.so /vendor/lib/egl/libGLES_mali.so bind
+    mount none /vendor/lib64/gpu/vulkan.mali.so /vendor/lib64/hw/vulkan.mali.so bind
+    mount none /vendor/lib/gpu/vulkan.mali.so /vendor/lib/hw/vulkan.mali.so bind
+    mount none /vendor/etc/gpu/android.hardware.vulkan.version.xml /vendor/etc/permissions/android.hardware.vulkan.version.xml bind
+    mount none /vendor/lib64/gpu/compat/libFilmGrainNoise.so /vendor/lib64/libFilmGrainNoise.so bind
+    mount none /vendor/lib64/gpu/compat/libLocalTM_preview_core.so /vendor/lib64/libLocalTM_preview_core.so bind
+    mount none /vendor/lib64/gpu/compat/libOpenCv.camera.samsung.so /vendor/lib64/libOpenCv.camera.samsung.so bind
+    mount none /vendor/lib64/gpu/compat/libeden_ud_gpu.so /vendor/lib64/libeden_ud_gpu.so bind
+    mount none /vendor/lib64/gpu/compat/libsemseg.so /vendor/lib64/libsemseg.so bind
+    mount none /vendor/lib64/gpu/compat/libvdis_core.so /vendor/lib64/libvdis_core.so bind
+
+on init && property:ro.boot.mali_version=r44p1
+    mount none /vendor/lib64/gpu/r49p1/libGLES_mali.so /vendor/lib64/egl/libGLES_mali.so bind
+    mount none /vendor/lib/gpu/r49p1/libGLES_mali.so /vendor/lib/egl/libGLES_mali.so bind
+    mount none /vendor/lib64/gpu/vulkan.mali.so /vendor/lib64/hw/vulkan.mali.so bind
+    mount none /vendor/lib/gpu/vulkan.mali.so /vendor/lib/hw/vulkan.mali.so bind
+    mount none /vendor/etc/gpu/android.hardware.vulkan.version.xml /vendor/etc/permissions/android.hardware.vulkan.version.xml bind
+    mount none /vendor/lib64/gpu/compat/libFilmGrainNoise.so /vendor/lib64/libFilmGrainNoise.so bind
+    mount none /vendor/lib64/gpu/compat/libLocalTM_preview_core.so /vendor/lib64/libLocalTM_preview_core.so bind
+    mount none /vendor/lib64/gpu/compat/libOpenCv.camera.samsung.so /vendor/lib64/libOpenCv.camera.samsung.so bind
+    mount none /vendor/lib64/gpu/compat/libeden_ud_gpu.so /vendor/lib64/libeden_ud_gpu.so bind
+    mount none /vendor/lib64/gpu/compat/libsemseg.so /vendor/lib64/libsemseg.so bind
+    mount none /vendor/lib64/gpu/compat/libvdis_core.so /vendor/lib64/libvdis_core.so bind
+
+on boot && property:ro.boot.mali_version=r44p1
+    write /sys/devices/platform/mfc/sbwc_disable 1
+
+on init && property:ro.boot.mali_version=r49p1
+    mount none /vendor/lib64/gpu/r49p1/libGLES_mali.so /vendor/lib64/egl/libGLES_mali.so bind
+    mount none /vendor/lib/gpu/r49p1/libGLES_mali.so /vendor/lib/egl/libGLES_mali.so bind
+    mount none /vendor/lib64/gpu/vulkan.mali.so /vendor/lib64/hw/vulkan.mali.so bind
+    mount none /vendor/lib/gpu/vulkan.mali.so /vendor/lib/hw/vulkan.mali.so bind
+    mount none /vendor/etc/gpu/android.hardware.vulkan.version.xml /vendor/etc/permissions/android.hardware.vulkan.version.xml bind
+    mount none /vendor/lib64/gpu/compat/libFilmGrainNoise.so /vendor/lib64/libFilmGrainNoise.so bind
+    mount none /vendor/lib64/gpu/compat/libLocalTM_preview_core.so /vendor/lib64/libLocalTM_preview_core.so bind
+    mount none /vendor/lib64/gpu/compat/libOpenCv.camera.samsung.so /vendor/lib64/libOpenCv.camera.samsung.so bind
+    mount none /vendor/lib64/gpu/compat/libeden_ud_gpu.so /vendor/lib64/libeden_ud_gpu.so bind
+    mount none /vendor/lib64/gpu/compat/libsemseg.so /vendor/lib64/libsemseg.so bind
+    mount none /vendor/lib64/gpu/compat/libvdis_core.so /vendor/lib64/libvdis_core.so bind
+
+on boot && property:ro.boot.mali_version=r49p1
+    write /sys/devices/platform/mfc/sbwc_disable 1
+
+on init && property:ro.boot.mali_version=r54p1
+    mount none /vendor/lib64/gpu/r54p1/libGLES_mali.so /vendor/lib64/egl/libGLES_mali.so bind
+    mount none /vendor/lib/gpu/r49p1/libGLES_mali.so /vendor/lib/egl/libGLES_mali.so bind
+    mount none /vendor/lib64/gpu/vulkan.mali.so /vendor/lib64/hw/vulkan.mali.so bind
+    mount none /vendor/lib/gpu/vulkan.mali.so /vendor/lib/hw/vulkan.mali.so bind
+    mount none /vendor/etc/gpu/android.hardware.vulkan.version.xml /vendor/etc/permissions/android.hardware.vulkan.version.xml bind
+    mount none /vendor/lib64/gpu/compat/libFilmGrainNoise.so /vendor/lib64/libFilmGrainNoise.so bind
+    mount none /vendor/lib64/gpu/compat/libLocalTM_preview_core.so /vendor/lib64/libLocalTM_preview_core.so bind
+    mount none /vendor/lib64/gpu/compat/libOpenCv.camera.samsung.so /vendor/lib64/libOpenCv.camera.samsung.so bind
+    mount none /vendor/lib64/gpu/compat/libeden_ud_gpu.so /vendor/lib64/libeden_ud_gpu.so bind
+    mount none /vendor/lib64/gpu/compat/libsemseg.so /vendor/lib64/libsemseg.so bind
+    mount none /vendor/lib64/gpu/compat/libvdis_core.so /vendor/lib64/libvdis_core.so bind
+
+on boot && property:ro.boot.mali_version=r54p1
+    write /sys/devices/platform/mfc/sbwc_disable 1
+
+on init && property:ro.boot.mali_version=r54p3
+    mount none /vendor/lib64/gpu/r54p1/libGLES_mali.so /vendor/lib64/egl/libGLES_mali.so bind
+    mount none /vendor/lib/gpu/r49p1/libGLES_mali.so /vendor/lib/egl/libGLES_mali.so bind
+    mount none /vendor/lib64/gpu/vulkan.mali.so /vendor/lib64/hw/vulkan.mali.so bind
+    mount none /vendor/lib/gpu/vulkan.mali.so /vendor/lib/hw/vulkan.mali.so bind
+    mount none /vendor/etc/gpu/android.hardware.vulkan.version.xml /vendor/etc/permissions/android.hardware.vulkan.version.xml bind
+    mount none /vendor/lib64/gpu/compat/libFilmGrainNoise.so /vendor/lib64/libFilmGrainNoise.so bind
+    mount none /vendor/lib64/gpu/compat/libLocalTM_preview_core.so /vendor/lib64/libLocalTM_preview_core.so bind
+    mount none /vendor/lib64/gpu/compat/libOpenCv.camera.samsung.so /vendor/lib64/libOpenCv.camera.samsung.so bind
+    mount none /vendor/lib64/gpu/compat/libeden_ud_gpu.so /vendor/lib64/libeden_ud_gpu.so bind
+    mount none /vendor/lib64/gpu/compat/libsemseg.so /vendor/lib64/libsemseg.so bind
+    mount none /vendor/lib64/gpu/compat/libvdis_core.so /vendor/lib64/libvdis_core.so bind
+
+on boot && property:ro.boot.mali_version=r54p3
+    write /sys/devices/platform/mfc/sbwc_disable 1

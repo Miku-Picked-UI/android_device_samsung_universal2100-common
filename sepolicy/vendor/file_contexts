@@ -118,3 +118,11 @@
 /(vendor|system/vendor)/bin/hw/vendor\.samsung\.hardware\.sysinput-service                         u:object_r:hal_samsung_sysinput_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.samsung_slsi\.hardware\.epic-service                        u:object_r:hal_vendor_epic_service_default_exec:s0
 /(vendor|system/vendor)/bin/hw/samsung\.hardware\.media\.c2-service                                u:object_r:mediacodec_exec:s0
+
+# Mali GPU driver switch (vendor/samsung/universal2100-common/mali): drivers and
+# their support libraries load in app processes, like the stock egl/ driver.
+/vendor/lib(64)?/gpu(/.*)?                     u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libcxx\.so                    u:object_r:same_process_hal_file:s0
+/vendor/lib64/libbinder_ml\.so                 u:object_r:same_process_hal_file:s0
+/vendor/lib64/libOCLc\.so                      u:object_r:same_process_hal_file:s0
+/vendor/lib64/hw/mapper\.mali\.so              u:object_r:same_process_hal_file:s0
