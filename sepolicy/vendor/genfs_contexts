@@ -72,6 +72,8 @@ genfscon sysfs /kernel/gpu/gpu_poweroff_delay                                   
 genfscon sysfs /kernel/gpu/gpu_freq_table                                              u:object_r:sysfs_gpu:s0
 genfscon sysfs /kernel/gpu/gpu_max_clock                                               u:object_r:sysfs_gpu:s0
 genfscon sysfs /kernel/gpu/gpu_mm_min_clock                                            u:object_r:sysfs_gpu:s0
+genfscon sysfs /kernel/gpu/gpu_clock                                                   u:object_r:sysfs_gpu:s0
+genfscon sysfs /kernel/gpu/gpu_busy                                                    u:object_r:sysfs_gpu:s0
 
 # GPS
 genfscon sysfs /devices/virtual/sec/gps/GPS_PWR_EN/value                               u:object_r:sysfs_gps_writable:s0
