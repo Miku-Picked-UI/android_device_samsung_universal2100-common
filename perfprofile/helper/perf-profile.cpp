@@ -16,6 +16,10 @@
 // too (faster GPU ramp-up) and flips vendor.powerhal.profile.performance, which
 // enables the extra LAUNCH/INTERACTION boosts and the screen-on GPU floor
 // (PROFILE_PERFORMANCE_GPU) in powerhint.json. Balanced turns everything off.
+//
+// Every profile but performance also keeps the sustained caps of the GAME hint
+// (vendor.powerhal.game.sustained): games run a little below peak clocks so
+// they stay clear of the thermal limits that would throttle them hard.
 
 #include <aidl/google/hardware/power/extension/pixel/IPowerExt.h>
 #include <android-base/logging.h>
@@ -34,6 +38,7 @@ namespace {
 
 constexpr char kProfileProp[] = "persist.sys.perf_profile";
 constexpr char kPerformanceProp[] = "vendor.powerhal.profile.performance";
+constexpr char kGameSustainedProp[] = "vendor.powerhal.game.sustained";
 constexpr char kPowerInstance[] = "android.hardware.power.IPower/default";
 
 constexpr int kPowerSave = 0;
@@ -96,6 +101,10 @@ bool Apply(const std::shared_ptr<IPowerExt>& ext, int profile) {
     // Boosts first, so that leaving performance never runs a stray boost.
     if (!SetProperty(kPerformanceProp, profile == kPerformance ? "true" : "false")) {
         LOG(ERROR) << "Failed to set " << kPerformanceProp;
+        ok = false;
+    }
+    if (!SetProperty(kGameSustainedProp, profile == kPerformance ? "false" : "true")) {
+        LOG(ERROR) << "Failed to set " << kGameSustainedProp;
         ok = false;
     }
 

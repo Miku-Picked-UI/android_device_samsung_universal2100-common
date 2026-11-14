@@ -41,8 +41,12 @@
         "9999999",
         "1768000",
         "2184000",
+        "2392000",
         "2704000",
         "2912000"
+      ],
+      "Comments": [
+        "2392000 => Sustained game cap: big/mid 2.39 GHz, little 1.79 GHz"
       ],
       "DefaultIndex": 0,
       "ResetOnInit": true
@@ -186,13 +190,15 @@
       "Values": [
         "494000",
         "585000",
+        "676000",
         "0"
       ],
       "Comments": [
-        "Only written while a performance profile caps the GPU",
+        "Only written while a performance profile or a game caps the GPU",
+        "676000 => Sustained game cap: drops the 3172/2730 MHz memory floors of 858/767 MHz",
         "0 => Release the max clock lock"
       ],
-      "DefaultIndex": 2,
+      "DefaultIndex": 3,
       "ResetOnInit": false
     },
     {
@@ -447,6 +453,20 @@
       "Node": "EMSTUNEReqMode",
       "Duration": 0,
       "Value": "3"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "CPUMaxFreq",
+      "Duration": 0,
+      "Value": "2392000",
+      "EnableProperty": "vendor.powerhal.game.sustained"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUMaxFreq",
+      "Duration": 0,
+      "Value": "676000",
+      "EnableProperty": "vendor.powerhal.game.sustained"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
