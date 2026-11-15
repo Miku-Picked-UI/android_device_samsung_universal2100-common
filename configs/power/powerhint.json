@@ -6,7 +6,8 @@
       "Values": [
         "2730000",
         "1014000",
-        "546000"
+        "546000",
+        "421000"
       ],
       "ResetOnInit": true
     },
@@ -293,22 +294,16 @@
       "Value": "2"
     },
     {
-      "PowerHint": "INTERACTIVE",
+      "PowerHint": "INTERACTION",
       "Node": "UclampTAMin",
       "Duration": 0,
-      "Value": "70"
+      "Value": "50"
     },
     {
       "PowerHint": "INTERACTIVE",
       "Node": "UclampTALatency",
       "Duration": 0,
       "Value": "1"
-    },
-    {
-      "PowerHint": "INTERACTIVE",
-      "Node": "UclampFgMin",
-      "Duration": 0,
-      "Value": "50"
     },
     {
       "PowerHint": "INTERACTIVE",
@@ -369,12 +364,6 @@
       "Node": "MemFreq",
       "Duration": 33,
       "Value": "1014000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "546000"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
