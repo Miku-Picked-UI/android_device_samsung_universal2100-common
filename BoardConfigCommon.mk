@@ -43,6 +43,16 @@ TARGET_KERNEL_CONFIG := \
     samsung/exynos2100.config \
     samsung/$(TARGET_DEVICE).config
 
+# [Miku-Picked UI] Root: build with BakaSU (KernelSU) + SUSFS by passing
+# WITH_BAKASU=true to the build (e.g. `WITH_BAKASU=true brunch o1s`, or export
+# it before building). Left unset, the kernel is stock with no root.
+# The fragment (arch/arm64/configs/samsung/bakasu.config) turns on CONFIG_KSU +
+# CONFIG_KSU_SUSFS; the kernel-side SUSFS hooks and drivers/kernelsu are always
+# in the source tree but compile in only when these configs are set.
+ifeq ($(WITH_BAKASU),true)
+TARGET_KERNEL_CONFIG += samsung/bakasu.config
+endif
+
 TARGET_KERNEL_NO_GCC := true
 
 ## DTB & DTBO
